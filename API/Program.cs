@@ -1,8 +1,6 @@
 using API.Middleware;
 using Application;
-using Application.Contracts;
 using Infrastructure;
-using Infrastructure.Repositories;
 using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +18,17 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 
+// Configure CORS to allow requests from any origin, with any header and any method
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Middlewares
@@ -33,6 +42,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.UseHttpsRedirection();
+app.UseCors();
 app.UseRouting();
 app.UseAuthorization();
 

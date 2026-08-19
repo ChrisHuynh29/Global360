@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Queries\GetToDoDetail\**" />
+    <EmbeddedResource Remove="Queries\GetToDoDetail\**" />
+    <None Remove="Queries\GetToDoDetail\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Commands\" />
     <Folder Include="Contracts\" />
     <Folder Include="Exceptions\" />

@@ -2,7 +2,6 @@
 using MediatR;
 using Application.Commands.CreateToDo;
 using Application.Commands.DeleteToDo;
-using Application.Queries.GetToDoDetail;
 using Application.Queries.GetToDoList;
 
 namespace API.Controllers
@@ -30,19 +29,11 @@ namespace API.Controllers
             });
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> Get(int id, CancellationToken ct)
-        {
-            var toDoItem = await _mediator.Send(new GetToDoDetailQuery { Id = id }, ct);
-
-            return Ok(toDoItem);
-        }
-
         [HttpPost(Name = "AddToDoItem")]
         public async Task<ActionResult<CreateToDoCommandResponse>> Add([FromBody] CreateToDoCommand createToDoCommand, CancellationToken ct)
         {
             var response = await _mediator.Send(createToDoCommand, ct);
-            return CreatedAtAction(nameof(Get), new { id = response.Id }, response);
+            return response;
         }
 
         [HttpDelete("{id:int}")]

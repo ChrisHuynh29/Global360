@@ -1,5 +1,4 @@
 ﻿using Moq;
-using Application.Queries.GetToDoDetail;
 using Application.Contracts;
 using Domain.Entities;
 using Application.Exceptions;
